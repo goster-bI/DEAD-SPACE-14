@@ -30,7 +30,6 @@ namespace Content.Client.Launcher
             ReconnectButton.OnPressed += _ => _state.RetryConnect();
 			DiscordButton.OnPressed += _ => IoCManager.Resolve<IUriOpener>().OpenUri("https://dsc.gg/deadspace14");
             // Redial shouldn't fail, but if it does, try a reconnect (maybe we're being run from debug)
-			
             RedialButton.OnPressed += _ =>
             {
                 if (!_state.Redial())
