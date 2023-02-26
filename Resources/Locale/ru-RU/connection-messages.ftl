@@ -16,6 +16,7 @@ command-whitelistadd-existing = { $username } уже в вайтлисте!
 command-whitelistadd-added = { $username } добавлен в вайтлист
 command-whitelistadd-not-found = Пользователь '{ $username }' не найден
 command-whitelistremove-description = Удалить игрока с указанным юзернеймом из вайтлиста.
+discord-ban-msg = Админ { $adminnick } забанил игрока { $username } { $expires } по причине: { $reason }
 command-whitelistremove-help = whitelistremove <username>
 command-whitelistremove-existing = { $username } не в вайтлисте!
 command-whitelistremove-removed = Пользователь { $username } удалён из вайтлиста
