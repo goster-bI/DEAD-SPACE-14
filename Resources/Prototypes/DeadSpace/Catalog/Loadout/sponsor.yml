@@ -1,0 +1,29 @@
+- type: loadout
+  id: BedsheetWizLoadout
+  entity: BedsheetWiz
+  sponsorOnly: true
+
+- type: loadout
+  id: VehicleATVLoadout
+  entity: VehicleATV
+  sponsorOnly: true
+
+- type: loadout
+  id: VehicleKeyATVLoadout
+  entity: VehicleKeyATV
+  sponsorOnly: true
+
+- type: loadout
+  id: ClothingBackpackDuffelMilitaryLoadout
+  entity: ClothingBackpackDuffelMilitary
+  sponsorOnly: true
+
+- type: loadout
+  id: ClothingOuterWizardLoadout
+  entity: ClothingOuterWizard
+  sponsorOnly: true
+
+- type: loadout
+  id: ClothingHeadHatWizardFakeLoadout
+  entity: ClothingHeadHatWizardFake
+  sponsorOnly: true
