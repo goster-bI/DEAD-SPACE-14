@@ -25,6 +25,9 @@ namespace Content.Client.Info
             var tutorialList = new Info();
 
             rootContainer.AddChild(rulesList);
+			var rulesLinksSection = new RulesLinksSection();
+            rulesList.InfoContainer.AddChild(rulesLinksSection);
+
             rootContainer.AddChild(tutorialList);
 
             TabContainer.SetTabTitle(rulesList, Loc.GetString("ui-info-tab-rules"));
