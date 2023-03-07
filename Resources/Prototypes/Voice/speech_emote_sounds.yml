@@ -58,6 +58,26 @@
         volume: -6
 
 - type: emoteSounds
+  id: MaleMoth
+  params:
+    variation: 0.125
+  sounds:
+    Scream:
+      path: /Audio/Voice/Moth/scream_moth.ogg
+    Laugh:
+      path: /Audio/Voice/Moth/laugh_moth.ogg
+
+- type: emoteSounds
+  id: FemaleMoth
+  params:
+    variation: 0.125
+  sounds:
+    Scream:
+      path: /Audio/Voice/Moth/scream_moth.ogg
+    Laugh:
+      path: /Audio/Voice/Moth/laugh_moth.ogg
+
+- type: emoteSounds
   id: DionaBodyEmotes
   sounds:
     Clap:
