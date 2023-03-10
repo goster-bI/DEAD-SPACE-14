@@ -60,6 +60,7 @@
       - id: RubberStampCaptain
       - id: WeaponAntiqueLaser
       - id: JetpackCaptainFilled
+      - id: BookCorpLaw
 
 - type: entity
   id: LockerHeadOfPersonnelFilled
@@ -211,3 +212,4 @@
       - id: SecurityTechFabCircuitboard
       - id: JetpackSecurityFilled
       - id: BoxEncryptionKeySecurity
+      - id: BookCorpLaw
