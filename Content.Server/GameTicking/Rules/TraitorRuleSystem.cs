@@ -6,6 +6,7 @@ using Content.Server.Roles;
 using Content.Server.Traitor;
 using Content.Server.Traitor.Uplink;
 using Content.Server.NPC.Systems;
+using Content.Server.Corvax.Sponsors;
 using Content.Shared.CCVar;
 using Content.Shared.Dataset;
 using Content.Shared.Preferences;
@@ -35,6 +36,7 @@ public sealed class TraitorRuleSystem : GameRuleSystem
     [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
     [Dependency] private readonly UplinkSystem _uplink = default!;
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
+	[Dependency] private readonly SponsorsManager _sponsors = default!;
 
     private ISawmill _sawmill = default!;
 
@@ -174,6 +176,8 @@ public sealed class TraitorRuleSystem : GameRuleSystem
         var list = new List<IPlayerSession>(candidates.Keys).Where(x =>
             x.Data.ContentData()?.Mind?.AllRoles.All(role => role is not Job { CanBeAntag: false }) ?? false
         ).ToList();
+		
+		var listSponsors = new List<IPlayerSession>();
 
         var prefList = new List<IPlayerSession>();
 
@@ -183,8 +187,16 @@ public sealed class TraitorRuleSystem : GameRuleSystem
             if (profile.AntagPreferences.Contains(TraitorPrototypeID))
             {
                 prefList.Add(player);
+				if (_sponsors.TryGetInfo(player.UserId, out var sponsor) && sponsor.HavePriorityAntag)
+				{
+					listSponsors.Add(player);
+				}
             }
         }
+		if (listSponsors.Count != 0)
+		{
+			return listSponsors;
+		}
         if (prefList.Count == 0)
         {
             _sawmill.Info("Insufficient preferred traitors, picking at random.");
