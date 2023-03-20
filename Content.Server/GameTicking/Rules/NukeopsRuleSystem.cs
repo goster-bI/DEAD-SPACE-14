@@ -19,6 +19,7 @@ using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
 using Content.Server.Traitor;
 using Content.Server.Traits.Assorted;
+using Content.Server.Corvax.Sponsors;
 using Content.Shared.CombatMode.Pacification;
 using Content.Shared.Dataset;
 using Content.Shared.Mobs;
@@ -54,6 +55,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
     [Dependency] private readonly GameTicker _ticker = default!;
     [Dependency] private readonly MapLoaderSystem _map = default!;
     [Dependency] private readonly RandomHumanoidSystem _randomHumanoid = default!;
+    [Dependency] private readonly SponsorsManager _sponsors = default!;
 
 
     private enum WinType
@@ -470,6 +472,9 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         var prefList = new List<IPlayerSession>();
         var cmdrPrefList = new List<IPlayerSession>();
         var operatives = new List<IPlayerSession>();
+		
+        var listSponsors = new List<IPlayerSession>();
+        var listSponsorsCmd = new List<IPlayerSession>();
 
         // The LINQ expression ReSharper keeps suggesting is completely unintelligible so I'm disabling it
         // ReSharper disable once ForeachCanBeConvertedToQueryUsingAnotherGetEnumerator
@@ -483,10 +488,18 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
             if (profile.AntagPreferences.Contains(_nukeopsRuleConfig.OperativeRoleProto))
             {
                 prefList.Add(player);
+                if (_sponsors.TryGetInfo(player.UserId, out var sponsor) && sponsor.HavePriorityAntag)
+                {
+                    listSponsors.Add(player);
+                }
             }
             if (profile.AntagPreferences.Contains(_nukeopsRuleConfig.CommanderRolePrototype))
             {
                 cmdrPrefList.Add(player);
+                if (_sponsors.TryGetInfo(player.UserId, out var sponsor) && sponsor.HavePriorityAntag)
+                {
+                    listSponsorsCmd.Add(player);
+                }
             }
         }
 
@@ -498,9 +511,9 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
             // Only one commander, so we do it at the start
             if (i == 0)
             {
-                if (cmdrPrefList.Count == 0)
+                if (cmdrPrefList.Count == 0 && listSponsorsCmd.Count == 0)
                 {
-                    if (prefList.Count == 0)
+                    if (prefList.Count == 0 && listSponsors.Count == 0)
                     {
                         if (everyone.Count == 0)
                         {
@@ -512,14 +525,28 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
                     }
                     else
                     {
-                        nukeOp = _random.PickAndTake(prefList);
+                        if (listSponsors.Count != 0)
+                        {
+                            nukeOp = _random.PickAndTake(listSponsors);
+                        }
+                        else
+                        {
+                            nukeOp = _random.PickAndTake(prefList);
+                        }
                         everyone.Remove(nukeOp);
                         Logger.InfoS("preset", "Insufficient preferred nukeop commanders, picking at random from regular op list.");
                     }
                 }
                 else
                 {
-                    nukeOp = _random.PickAndTake(cmdrPrefList);
+                    if (listSponsorsCmd.Count != 0)
+                    {
+                    	nukeOp = _random.PickAndTake(listSponsorsCmd);
+                    }
+                    else
+                    {
+                    	nukeOp = _random.PickAndTake(cmdrPrefList);
+                    }
                     everyone.Remove(nukeOp);
                     prefList.Remove(nukeOp);
                     Logger.InfoS("preset", "Selected a preferred nukeop commander.");
@@ -527,7 +554,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
             }
             else
             {
-                if (prefList.Count == 0)
+                if (prefList.Count == 0 && listSponsors.Count == 0)
                 {
                     if (everyone.Count == 0)
                     {
@@ -539,7 +566,14 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
                 }
                 else
                 {
-                    nukeOp = _random.PickAndTake(prefList);
+                    if (listSponsors.Count != 0)
+                    {
+                    	nukeOp = _random.PickAndTake(listSponsors);
+                    }
+                    else
+                    {
+                    	nukeOp = _random.PickAndTake(prefList);
+                    }
                     everyone.Remove(nukeOp);
                     Logger.InfoS("preset", "Selected a preferred nukeop.");
                 }
