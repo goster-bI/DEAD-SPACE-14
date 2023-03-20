@@ -35,6 +35,26 @@
     path: /Audio/Voice/Vox/shriek1.ogg
     params:
       variation: 0.125
+      
+- type: emoteSounds
+  id: MaleFelinid
+  params:
+    variation: 0.125
+  sounds:
+    Scream:
+      collection: FelinidScreams
+    Laugh:
+      collection: MaleLaugh
+
+- type: emoteSounds
+  id: FemaleFelinid
+  params:
+    variation: 0.125
+  sounds:
+    Scream:
+      collection: FelinidScreams
+    Laugh:
+      collection: FemaleLaugh
 
 - type: emoteSounds
   id: UnisexDiona
