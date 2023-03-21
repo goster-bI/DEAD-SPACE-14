@@ -9,7 +9,7 @@
     netsync: false
     noRot: true
     drawdepth: Mobs
-    scale: 0.8, 0.8
+    scale: 0.85, 0.85
     layers:
     - map: [ "enum.HumanoidVisualLayers.Chest" ]
       color: "#e8b59b"
@@ -130,6 +130,7 @@
   - type: Thieving
     stealthy: true
     stripTimeReduction: 1
+  - type: OwOAccent
   - type: Speech
     speechSounds: Alto
   - type: DamageOnHighSpeedImpact
