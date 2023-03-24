@@ -529,6 +529,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
                         if (listSponsors.Count != 0)
                         {
                             nukeOp = _random.PickAndTake(listSponsors);
+							prefList.Remove(nukeOp);
                         }
                         else
                         {
@@ -543,6 +544,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
                     if (listSponsorsCmd.Count != 0)
                     {
                     	nukeOp = _random.PickAndTake(listSponsorsCmd);
+						cmdrPrefList.Remove(nukeOp);
                     }
                     else
                     {
